@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop All</title>
+    <link rel="stylesheet" href="ShopAll.css">
+</head>
+<body>
+    <header>
+        <h1 class="text-center my-4">Shop All Our Products!</h1>
+    </header>
+    <main class="container">
+        <div id="categories-container">
+            <!-- Dynamic content will be inserted here -->
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('get_all_categories.php')
+                .then(response => response.json())
+                .then(categories => {
+                    const container = document.getElementById('categories-container');
+                    categories.forEach(category => {
+                        const categorySection = `
+                            <section class="category-section my-5">
+                                <h2 class="category-title">${category.name}</h2>
+                                <div class="row" id="category-${category.category_id}"></div>
+                            </section>`;
+                        container.innerHTML += categorySection;
+
+                        // Fetch products for each category
+                        fetch(`get_products_by_category.php?category_id=${category.category_id}`)
+                            .then(response => response.json())
+                            .then(products => {
+                                const productContainer = document.getElementById(`category-${category.category_id}`);
+                                products.forEach(product => {
+                                    const productCard = `
+                                        <div class="col-md-4">
+                                            <div class="card">
+                                                <img src="${product.image_url}" class="card-img-top" alt="${product.name}">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">${product.name}</h5>
+                                                    <p class="card-text">${product.description}</p>
+                                                    <p class="card-text">R${product.price}</p>
+                                                    <button class="btn btn-dark-green add-to-cart" data-product-id="${product.product_id}">Add to Cart</button>
+                                                </div>
+                                            </div>
+                                        </div>`;
+                                    productContainer.innerHTML += productCard;
+                                });
+
+                                // Attach event listeners to "Add to Cart" buttons
+                                productContainer.querySelectorAll('.add-to-cart').forEach(button => {
+                                    button.addEventListener('click', function () {
+                                        const productId = this.getAttribute('data-product-id');
+                                        addToCart(productId);
+                                    });
+                                });
+                            })
+                            .catch(error => console.error('Error fetching products:', error));
+                    });
+                })
+                .catch(error => console.error('Error fetching categories:', error));
+        });
+
+        function addToCart(productId) {
+            fetch('add_to_cart.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ product_id: productId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Product added to cart successfully!');
+                } else if (data.error === 'User not logged in') {
+                    alert('Please log in or sign up to add items to your cart.');
+                    window.location.href = 'login.html';
+                } else {
+                    alert('Failed to add product to cart.');
+                }
+            })
+            .catch(error => console.error('Error adding to cart:', error));
+        }
+    </script>
+</body>
+</html>

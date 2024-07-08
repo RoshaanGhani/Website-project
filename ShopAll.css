@@ -1,0 +1,129 @@
+/* styles for Shop all */
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: black;
+    background-color: #fdebd0; /* Light peach background */
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 90%;
+    margin: auto;
+    padding: 20px 0;
+}
+
+header h1 {
+    text-align: center;
+    color: black;
+    margin: 20px 0;
+}
+
+h2.category-title {
+    text-align: center;
+    color: black;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+/* Card styles */
+.card {
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    background-color: white;
+}
+
+.card img {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    width: 100%;
+    height: auto;
+}
+
+.card-body {
+    padding: 15px;
+    text-align: center;
+}
+
+.card-title {
+    font-size: 1.25em;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    font-size: 1em;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Button styles */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn-dark-green {
+    background-color: #013d10; /* Dark green */
+    color: white;
+}
+
+.btn-dark-green:hover {
+    background-color: #02641b; /* Slightly lighter dark green */
+}
+
+/* Category section styles */
+.category-section {
+    padding: 20px 0;
+}
+
+.category-section h2 {
+    border-bottom: 2px solid #013d10; /* Dark green underline */
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.category-section .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.category-section .col-md-4 {
+    flex: 0 0 30%;
+    max-width: 30%;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .category-section .col-md-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+/* Ensuring consistent card size on Refill/Exchange page */
+#refill-exchange-container .card {
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+#refill-exchange-container .card img {
+    flex: 1 0 auto !important;
+    width: 100% !important;
+    height: 200px !important; /* Fixed height for images to maintain consistency */
+    object-fit: cover !important;
+}
+
+#refill-exchange-container .card-body {
+    flex: 0 1 auto !important;
+    padding: 15px !important;
+    text-align: center !important;
+}

@@ -1,0 +1,14 @@
+body {
+  /* Light peach color */
+background-color: darkgreen;
+}
+
+.container {
+    background-color:rgb(246, 231, 206); 
+    
+}
+
+.btn btn-primary btn-lg {
+
+    color: darkgreen;
+}

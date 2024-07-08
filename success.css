@@ -1,0 +1,31 @@
+body {
+    background-color: #ffe5b4; /* Light peach background */
+    color: #000; /* Black text color */
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Center align text */
+}
+
+.container h1 {
+    margin-bottom: 20px; /* Add margin below heading */
+}
+
+.container p {
+    margin-bottom: 20px; /* Add margin below paragraphs */
+}
+
+.container a {
+    color: #006400; /* Dark green link color */
+    text-decoration: none; /* Remove underline */
+}
+
+.container a:hover {
+    text-decoration: underline; /* Add underline on hover */
+}

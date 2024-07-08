@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shopping Cart</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="stylesheet" href="ShoppingCart.css">
+    <script type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+<script type="text/javascript">
+(function(){
+  emailjs.init({
+    publicKey: "F-5A3o8ZdgKNa5U62",
+  });
+})();
+</script>
+</head>
+<body>
+    <main class="page">
+        <section class="shopping-cart dark">
+            <div class="container">
+                <div class="block-heading">
+                    <h2>Shopping Cart</h2>
+                    <!-- <p>Thank You For Your Business! The "Checkout" Button Will Place Your Order But We Will Not Process It Until We Receive The POP. You will Be instructed Further When You Press The Button.</p> -->
+                </div>
+                <div class="content">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-8">
+                            <div class="items" id="cart-items">
+                                <!-- Cart items will be dynamically inserted here -->
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-4">
+                            <div class="summary">
+                                <h3>Summary</h3>
+                                <div class="summary-item"><span class="text">Subtotal</span><span class="price" id="subtotal">R0</span></div>
+                                <div class="summary-item"><span class="text">Discount</span><span class="price">R0</span></div>
+                                <div class="summary-item"><span class="text">Delivery Fee</span><span class="price">R0</span></div>
+                                <div class="summary-item"><span class="text">Total</span><span class="price" id="total">R0</span></div>
+                                <button type="button" id="checkout-button" class="btn btn-primary btn-lg btn-block">Checkout</button>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            function fetchCartItems() {
+                $.ajax({
+                    url: 'fetch_cart_items.php',
+                    method: 'GET',
+                    success: function(data) {
+                        var cartItems = JSON.parse(data);
+                        var itemsContainer = $('#cart-items');
+                        var subtotal = 0;
+                        itemsContainer.empty();
+
+                        if (cartItems.error) {
+                            alert(cartItems.error);
+                            return;
+                        }
+
+                        cartItems.forEach(function(item) {
+                            var itemHTML = `
+                                <div class="product" id="product-${item.product_id}">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <img class="img-fluid mx-auto d-block image" src="${item.image_url}">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="info">
+                                                <div class="row">
+                                                    <div class="col-md-5 product-name">
+                                                        <div class="product-name">
+                                                            <a href="#">${item.name}</a>
+                                                            <div class="product-info">
+                                                                <div>Description: <span class="value">${item.description}</span></div>
+                                                                <div>Price: <span class="value">R${item.price}</span></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4 quantity">
+                                                        <label for="quantity-${item.product_id}">Quantity:</label>
+                                                        <input id="quantity-${item.product_id}" type="number" value="${item.quantity}" min="0" class="form-control quantity-input">
+                                                    </div>
+                                                    <div class="col-md-3 price">
+                                                        <span>R${(item.price * item.quantity).toFixed(2)}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                            itemsContainer.append(itemHTML);
+                            subtotal += item.price * item.quantity;
+
+                            // Add event listener for quantity change
+                            $(`#quantity-${item.product_id}`).on('change', function() {
+                                var newQuantity = parseInt($(this).val());
+                                var originalQuantity = item.quantity;
+
+                                if (newQuantity < 0) {
+                                    alert('Quantity must be at least 0.');
+                                    $(this).val(0);
+                                    newQuantity = 0;
+                                }
+
+                                // Update quantity in database
+                                if (newQuantity === 0) {
+                                    if (confirm('Are you sure you want to remove this product?')) {
+                                        removeProduct(item.product_id);
+                                    } else {
+                                        $(this).val(originalQuantity);
+                                    }
+                                } else {
+                                    updateQuantity(item.product_id, newQuantity);
+                                }
+
+                                // Recalculate subtotal and total
+                                if (newQuantity > 0) {
+                                    subtotal -= item.price * originalQuantity;
+                                    item.quantity = newQuantity;
+                                    subtotal += item.price * newQuantity;
+                                    $('#subtotal').text(`R${subtotal.toFixed(2)}`);
+                                    $('#total').text(`R${subtotal.toFixed(2)}`);
+                                    $(this).closest('.product').find('.price').html(`R${(item.price * newQuantity).toFixed(2)}`);
+                                }
+                            });
+                        });
+
+                        $('#subtotal').text(`R${subtotal.toFixed(2)}`);
+                        $('#total').text(`R${subtotal.toFixed(2)}`);
+                    },
+                    error: function() {
+                        alert('Failed to fetch cart items');
+                    }
+                });
+            }
+
+            function updateQuantity(productId, quantity) {
+                $.ajax({
+                    url: 'update_quantity.php',
+                    method: 'POST',
+                    data: { product_id: productId, quantity: quantity },
+                    success: function(response) {
+                        console.log(response);
+                    },
+                    error: function() {
+                        alert('Failed to update quantity');
+                    }
+                });
+            }
+
+            function removeProduct(productId) {
+                $.ajax({
+                    url: 'remove_product.php',
+                    method: 'POST',
+                    data: { product_id: productId },
+                    success: function(response) {
+                        var res = JSON.parse(response);
+                        if (res.success) {
+                            $(`#product-${productId}`).remove();
+                            fetchCartItems();
+                        } else {
+                            alert('Failed to remove product: ' + res.error);
+                        }
+                    },
+                    error: function() {
+                        alert('Failed to remove product');
+                    }
+                });
+            }
+
+            function sendEmail(data) {
+    // Define the admin email
+    const adminEmail = 'ghaniroshaan@gmail.com';
+    
+    // Concatenate user email and admin email, separated by a comma
+    const recipientEmails = `${adminEmail},${data.user_email}`;
+
+    emailjs.send('service_4k1uuip', 'template_flc3uwt', {
+        order_id: data.order_id,
+        user_name: data.user_name,
+        user_email: data.user_email,
+        user_address: data.user_address,
+        user_phone: data.user_phone,
+        total_amount: data.total_amount,
+        area_id: data.area_id,
+        cart_items: data.cart_items,
+        to_email: recipientEmails // This line includes both emails
+    }).then(function(response) {
+        console.log('SUCCESS!', response.status, response.text);
+    }, function(error) {
+        console.log('FAILED...', error);
+    });
+}
+
+
+            function checkout() {
+                var subtotal = parseFloat($('#subtotal').text().substring(1)); // Get the subtotal without the 'R' prefix
+                if (subtotal < 200) {
+                    alert('Your order must be above R200 to proceed with checkout.');
+                    return;
+                }
+
+                $.ajax({
+                    url: 'process_order.php',
+                    method: 'POST',
+                    success: function(response) {
+                        var res = JSON.parse(response);
+                        if (res.success) {
+                            sendEmail(res.email_data);
+                            window.location.href = 'thank_you.html?total=' + subtotal.toFixed(2);
+                        } else {
+                            alert('Failed to process order: ' + res.error);
+                        }
+                    },
+                    error: function() {
+                        alert('Failed to process order');
+                    }
+                });
+            }
+
+            fetchCartItems();
+
+            $('#checkout-button').on('click', function() {
+                checkout();
+            });
+        });
+    </script>
+</body>
+</html>
+

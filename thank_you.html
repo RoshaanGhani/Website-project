@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Thank You</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="stylesheet" href="thankyou.css">
+</head>
+<body>
+     <!-- whatsapp integration -->
+
+     <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+     <div class="elfsight-app-566f5a44-3677-4001-9cfc-37f1da74c504" data-elfsight-app-lazy></div>
+     
+    <main class="page">
+        <section class="shopping-cart dark">
+            <div class="container">
+                <div class="block-heading">
+                    <h2>Thank You!</h2>
+                </div>
+                <div class="content">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-8">
+                            <p>Your order is pending until the payment is reflected in our bank account.</p>
+                            <p>Bank account details:</p>
+                            <p>Account Name: XYZ</p>
+                            <p>Account Number: 123456789</p>
+                            <p>Bank Name: ABC Bank</p>
+                            <p>Please Whatsapp or email us the Proof of Payment (POP) immediately after making the payment.</p>
+                            <p>The order will not be processed until the payment is reflected into our Bank Account.</p>
+
+                            <!-- Display total amount due dynamically -->
+                            <p>Total Amount Due: <span id="totalAmount"></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        // Retrieve the total amount from the URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const totalAmount = urlParams.get('total');
+
+        // Display the total amount on the page
+        if (totalAmount) {
+            document.getElementById('totalAmount').textContent = 'R' + totalAmount;
+        } else {
+            document.getElementById('totalAmount').textContent = 'R0.00';
+        }
+    </script>
+</body>
+</html>

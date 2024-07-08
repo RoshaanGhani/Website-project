@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="ShopAll.css">
+    <style>
+        body {
+            background-color: #ffe5b4;
+            color: #000;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 5px;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .btn {
+            background-color: #006400;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Popup styling */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ffe5b4;
+            padding: 20px;
+            border: 2px solid #006400;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .popup.success {
+            border-color: #4CAF50;
+        }
+
+        .popup.error {
+            border-color: #d9534f;
+        }
+
+        .popup button {
+            background-color: #006400;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Login</h1>
+        <form id="login-form" method="POST">
+            <label for="email_or_phone">Email or Phone</label>
+            <input type="text" id="email_or_phone" name="email_or_phone" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit" class="btn">Login</button>
+        </form>
+
+        <p>Don't have an account? <a href="register.html">Register here</a>.</p>
+    </div>
+
+    <!-- Popup for messages -->
+    <div id="popup" class="popup">
+        <p id="popup-message"></p>
+        <button id="popup-close">Close</button>
+    </div>
+
+    <script>
+ document.getElementById('login-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const email_or_phone = document.getElementById('email_or_phone').value;
+    const password = document.getElementById('password').value;
+
+    fetch('login.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email_or_phone, password })
+    })
+    .then(response => response.json())
+    .then(data => {
+        const popup = document.getElementById('popup');
+        const popupMessage = document.getElementById('popup-message');
+        popupMessage.textContent = data.message;
+        
+        if (data.success) {
+            popup.classList.add('success');
+            popup.classList.remove('error');
+            setTimeout(() => {
+                if (data.admin) {
+                    window.location.href = 'AdminDashboard.html'; // Redirect to admin dashboard
+                } else {
+                    window.location.href = 'index.html'; // Redirect to user home page
+                }
+            }, 2000); // Redirect after 2 seconds
+        } else {
+            popup.classList.add('error');
+            popup.classList.remove('success');
+        }
+
+        popup.style.display = 'block';
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});
+
+document.getElementById('popup-close').addEventListener('click', function() {
+    document.getElementById('popup').style.display = 'none';
+});
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,275 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
+body {
+  font-family: 'Open Sans', 'sans-serif';
+  background-color: rgb(246, 231, 206);    /* (245, 245, 220)*/
+}
+
+.navbar {
+  width: 100%; 
+  background-color: rgb(1, 41, 1); 
+  position: relative; 
+  padding: 0.5rem 1rem; 
+}
+
+/* Navbar links */
+.navbar .navbar-nav > li > a {
+  color: #fff; 
+}
+
+/* Navbar brand (logo) */
+.navbar .navbar-brand {
+  color: #fff; /* White color for the logo */
+  font-size: 24px; 
+}
+
+.mega-dropdown {
+  position: static !important;
+}
+
+.mega-dropdown-menu {
+  padding: 20px 0px;
+  width: 100%;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
+.mega-dropdown-menu > li > ul {
+  padding: 0;
+  margin: 0;
+}
+
+.mega-dropdown-menu > li > ul > li {
+  list-style: none;
+}
+
+.mega-dropdown-menu > li > ul > li > a {
+  display: block;
+  color: #222222;
+  padding: 3px 5px;
+}
+
+.mega-dropdown-menu > li ul > li > a:hover,
+.mega-dropdown-menu > li ul > li > a:focus {
+  text-decoration: none;
+}
+
+.mega-dropdown-menu .dropdown-header {
+  font-size: 18px;
+  color: #ff3546;
+  padding: 5px 60px 5px 5px;
+  line-height: 30px;
+}
+
+.carousel-control {
+  width: 30px;
+  height: 30px;
+  top: -35px;
+}
+
+.left.carousel-control {
+  right: 30px;
+  left: inherit;
+}
+
+.carousel-control .glyphicon-chevron-left, 
+.carousel-control .glyphicon-chevron-right {
+  font-size: 12px;
+  background-color: #fff;
+  line-height: 30px;
+  text-shadow: none;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+/* Custom styles for shopping cart icon */
+.navbar-nav > li > a .fa-shopping-cart {
+  font-size: 18px; 
+  margin-left: 15px;
+  color: #fff; 
+}
+
+/* Welcome video */
+#video-container {
+  position: relative;  
+  top: 0;
+  left: 0;
+  width: 100vw; 
+  height: 80vh;  
+  z-index: -2; 
+}
+
+#backgroundVideo {
+  /* position: fixed; */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 80vh;
+  object-fit: cover; 
+  /* z-index: -2;  */
+}
+
+/* Shop All button */
+#ShopAll {
+  background-color: rgb(1, 41, 1); 
+  color: white; 
+  border: none; 
+  border-radius: 5px; 
+  padding: 10px 20px; 
+  cursor: pointer; 
+  font-size: 16px; 
+  transition: background-color 0.3s; 
+}
+
+#ShopAll:hover {
+  background-color: #1a441a; /* Darker green on hover */
+}
+
+/* Canva logos */
+.Logos {
+  display: flex;
+  justify-content: space-around; 
+}
+
+.Logos img {
+  max-width: 90%; 
+  height: auto;
+}
+
+/* Featured products section */
+.card {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+  margin-bottom: 20px;
+  background-color: white; 
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card .card-img-container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  height: 200px; /* Set height of container */
+}
+
+.card .card-img-container img {
+  max-width: 100%; /* Ensure image doesn't overflow container */
+  max-height: 100%; /* Ensure image doesn't overflow container */
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.card .card-body {
+  text-align: center;
+}
+
+.card .btn-dark-green {
+  background-color: #2f6c2f;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  transition: background-color 0.3s;
+}
+
+.card .btn-dark-green:hover {
+  background-color: #275527;
+}
+
+/* About us section */
+.g4gas-section {
+ 
+  @import url('https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css');
+  background-color: #012d09;
+}
+
+.g4gas-section .img-fluid {
+  justify-content: space-around;
+  max-width: 100%; 
+  height: auto;
+  margin-top: 35px;
+}
+
+.g4gas-section .row {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.g4gas-section .text-custom {
+  color: #FFFFFF; 
+}
+
+.g4gas-section {
+  @import url('https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css');
+  background-color: #012d09;
+}
+
+.g4gas-section .img-fluid {
+  justify-content: space-around;
+  max-width: 100%; 
+  height: auto;
+  margin-top: 35px;
+}
+
+.g4gas-section .row {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.g4gas-section .text-custom {
+  color: #FFFFFF; 
+}
+
+
+.g4gas-section #we-deliver .contentWrapper span.textWrapper span {
+  display: block;
+  font-size: 20px;
+  text-transform: capitalize;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.g4gas-section #we-deliver .contentWrapper p {
+  font-size: 16px;
+  line-height: 25px;
+  padding-bottom: 25px;
+}
+
+/* Footer */
+.footer {
+  background-color: #012d09;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.footer img {
+  max-width: 100%;
+  height: auto;
+}
+
+.footer a {
+  color: #FFFFFF;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.footer .links {
+  margin-bottom: 15px;
+}
+
+.footer .copyright {
+  margin-top: 10px;
+  color: #FFFFFF;
+}

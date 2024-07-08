@@ -1,0 +1,33 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffe5b4; /* Light peach background color */
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #013d10; /* Dark green header background color */
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+main {
+    padding: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+    text-align: left;
+}
+
+th {
+    background-color: #013d10; /* Dark green table header background color */
+    color: white;
+}

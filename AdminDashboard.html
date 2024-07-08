@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="AdminDashboard.css">
+</head>
+<body>
+    <div class="admin-dashboard">
+        <h1>Admin Dashboard</h1>
+        <div class="navigation">
+            <button onclick="showSection('new-product')">Create New Product</button>
+            <button onclick="showSection('new-area')">Create New Area</button>
+            <button onclick="showSection('new-admin')">Create New Admin</button>
+            <button onclick="showSection('new-category')">Create New Category</button>
+            <button onclick="showSection('view-orders')">View Orders</button>
+            <button onclick="showSection('view-products')">View Products</button>
+            <button onclick="showSection('view-areas')">View Areas</button>
+            <button onclick="showSection('view-inquiries')">View Inquiries</button>
+        </div>
+        
+        <div id="new-product" class="section">
+            <h2>Create New Product</h2>
+            <form id="product-form">
+                <label for="product-name">Name:</label>
+                <input type="text" id="product-name" name="product-name" required>
+                <label for="product-description">Description:</label>
+                <textarea id="product-description" name="product-description" required></textarea>
+                <label for="product-price">Price:</label>
+                <input type="number" id="product-price" name="product-price" required>
+                <label for="product-stock">Stock Quantity:</label>
+                <input type="number" id="product-stock" name="product-stock" required>
+                <label for="product-category">Category:</label>
+                <select id="product-category" name="product-category" required>
+                    <!-- Options populated dynamically -->
+                </select>
+                <label for="product-image">Image URL:</label>
+                <input type="text" id="product-image" name="product-image">
+                <label for="product-featured">Featured:</label>
+                <input type="checkbox" id="product-featured" name="product-featured">
+                <button type="submit">Create Product</button>
+            </form>
+        </div>
+        
+        <div id="new-area" class="section">
+            <h2>Create New Area</h2>
+            <form id="area-form">
+                <label for="area-name">Area Name:</label>
+                <input type="text" id="area-name" name="area-name" required>
+                <button type="submit">Create Area</button>
+            </form>
+        </div>
+        
+        <div id="new-admin" class="section">
+            <h2>Create New Admin</h2>
+            <form id="admin-form">
+                <label for="admin-email">Email:</label>
+                <input type="email" id="admin-email" name="admin-email" required>
+                <label for="admin-password">Password:</label>
+                <input type="password" id="admin-password" name="admin-password" required>
+                <label for="admin-fullname">Full Name:</label>
+                <input type="text" id="admin-fullname" name="admin-fullname">
+                <button type="submit">Create Admin</button>
+            </form>
+        </div>
+        
+        <div id="new-category" class="section">
+            <h2>Create New Category</h2>
+            <form id="category-form">
+                <label for="category-name">Category Name:</label>
+                <input type="text" id="category-name" name="category-name" required>
+                <button type="submit">Create Category</button>
+            </form>
+        </div>
+        
+        <div id="view-orders" class="section">
+            <h2>View Orders</h2>
+            <div class="orders">
+                <h3>Pending Orders</h3>
+                <div id="pending-orders"></div>
+                
+                <h3>Completed Orders</h3>
+                <div id="completed-orders"></div>
+                
+                <h3>Cancelled Orders</h3>
+                <div id="cancelled-orders"></div>
+            </div>
+        </div>
+        
+        <div id="view-products" class="section">
+            <h2>View Products</h2>
+            <div id="products-list"></div>
+        </div>
+
+        <!-- Add Edit Product Section -->
+    <!-- Add Edit Product Section -->
+<div id="edit-product" class="section" style="display:none;">
+    <h2>Edit Product</h2>
+    <form id="edit-product-form">
+        <input type="hidden" id="edit-product-id" name="product-id">
+        <label for="edit-product-name">Name:</label>
+        <input type="text" id="edit-product-name" name="product-name" required>
+        <label for="edit-product-description">Description:</label>
+        <textarea id="edit-product-description" name="product-description" required></textarea>
+        <label for="edit-product-price">Price:</label>
+        <input type="number" id="edit-product-price" name="product-price" required>
+        <label for="edit-product-stock">Stock Quantity:</label>
+        <input type="number" id="edit-product-stock" name="product-stock" required>
+        <label for="edit-product-category">Category:</label>
+        <select id="edit-product-category" name="product-category" required>
+            <!-- Options populated dynamically -->
+        </select>
+        <label for="edit-product-image">Image URL:</label>
+        <input type="text" id="edit-product-image" name="product-image">
+        <label for="edit-product-featured">Featured:</label>
+        <input type="checkbox" id="edit-product-featured" name="product-featured">
+        <button type="submit">Save Changes</button>
+    </form>
+</div>
+
+        
+        <div id="view-areas" class="section">
+            <h2>View Areas</h2>
+            <div id="areas-list"></div>
+        </div>
+        
+        <div id="view-inquiries" class="section">
+            <h2>View Inquiries</h2>
+            <div id="inquiries-list"></div>
+        </div>
+    </div>
+    
+    <script src="AdminDashboard.js"></script>
+</body>
+</html>
